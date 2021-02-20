@@ -12,26 +12,26 @@ loading-bars currently contains 3 different loading bars:
 
 ### progress_bar(int)
   
-    This function creates a progress bar with a desired size and percentage
+This function creates a progress bar with a desired size and percentage
 
-    Requires the current percentage value
+Requires the current percentage value
 
 
 ### dinamic_bar()
   
-    This function will make the first progress bar dinamic and very customizable
+This function will make the first progress bar dinamic and very customizable
 
-    Doesn't require any arguments to run the following example:
+Doesn't require any arguments to run the following example:
 
-    ![example-loadingbar.gif](https://s2.gifyu.com/images/example-loadingbar.gif)
+![example-loadingbar.gif](https://s2.gifyu.com/images/example-loadingbar.gif)
 
 ### loading_info()
     
-    This function will show a information while loads by adding dots
+This function will show a information while loads by adding dots
   
-    Doesn't require any arguments to run [INFO] from following example:
-  
-    ![example-info.gif](https://s2.gifyu.com/images/example-info.gif)
+Doesn't require any arguments to run [INFO] from following example:
+
+![example-info.gif](https://s2.gifyu.com/images/example-info.gif)
 
 Thanks, I hope you find this useful!
 
