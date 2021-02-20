@@ -1,90 +1,79 @@
-# ------------------------------------------------ Barra de Progresso ------------------------------------------------ #
+# -------------------------------------------------- Progress Bar ---------------------------------------------------- #
 
-def progress_bar(percentagematual, total=100, tamanhobarra=30):
+def progress_bar(current_percentage, total=100, bar_size=30):
     """
-    Função gera barra de progresso simples, para atualizar a barra, apenas chame a função novamente com a nova
-    percentagem que deseja
+    Function generates simple progress bar. To update the bar, just call the function again with the new one
+    percentage you want, it will erase the last bar and create a new one with the new percentage
 
-    :param percentagematual: Percentagem atual da barra
-    :type percentagematual: int
-    :param total: Percentagemr Total da Barra
-    :type total: int
-    :param tamanhobarra: Tamanho da barra
-    :type tamanhobarra: int
-    :return:
+    :param int current_percentage: Desired percentage the user wants the bar to print
+    :param int total: Total percentage, can be higher than 100%, values will adjust for that
+    :param int bar_size: Size(number of substrings) the bar will have in total
     """
-    # a percentagem é igual a percentagem da atual da barra definida pelo utilizador multiplicada por 100
-    # e depois dividida pela percentagem total também definida pelo utilizador (ex. (80*100)/100 = 80;(80*100)/200 = 40,
-    # para que o utilizador possa definir uma valor maior que 100% para a barra
-    percentagem = int(float(percentagematual) * 100 / total)
-    # a seta da barra  e progresso são multiplicadas pela percentagem(80/40) a dividir por cem (0.8/0.4) a multiplicar
-    # pelo tamanho da barra que pode ser ou não definido pelo utilizador menos um (23/12) que será o quanto da
-    # barra estará preenchida do tamanho total da barra(o valor predefinido é 30) mais uma sinal de maior que
-    setas = "=" * int(percentagem / 100 * tamanhobarra - 1) + ">"
-    # os espaços são o tamanho da barra menos o total de setas (30-23 = 7/30-12= 18)
-    espacos = " " * (tamanhobarra - len(setas))
-    # O print disso será (as setas, seguidos pelos espaços) com a percentagem no final, seguido depois então por
-    # end="\r" o que fará com que o próximo print da barra tome o lugar do print anterior(na mesma linha no mesmo lugar)
-    # dando então o efeito de uma barra de progresso
-    print("\rProgress: [{0}{1}] {2} %".format(setas, espacos, percentagem), end="", flush=True)
+    # The percentage is equal to the percentage of the current_percentage multiplied by 100 and then divided by
+    # the total percentage defined by the user e.g.: (80 * 100) / 100 = 80; (80 * 100) / 200 = 40
+    # This way, the user can define a value greater than 100% for the bar
+    percentage = int(float(current_percentage) * 100 / total)
+    # The arrows are multiplied by the percentage (e.g. 80), which are divided by one hundred (0.8) and multiplied
+    # by the size of the bar minus one (23). This result will show how much of the bar will be filled
+    arrows = "=" * int(percentage / 100 * bar_size - 1) + ">"
+    # Spaces are the size of the bar minus the total number of arrows (30-23 = 7)
+    spaces = " " * (bar_size - len(arrows))
+    # The print of this will start cleaning the previous bar, then it will start with arrows, followed by spaces
+    # with the percentage at the end
+    print("\rProgress: [{0}{1}] {2} %".format(arrows, spaces, percentage), end="", flush=True)
 
 
-# ---------------------------- Função para implementar barra de progresso que imprime algo --------------------------- #
+# --------------------------------------------------- Dinamic Bar ---------------------------------------------------- #
 
 
-def dinamic_bar(percentagemtotal=100, pararempercentagem=False,
-                           pararem="", imprimir="", tempo=1200, mensagemconclusao="Done!"):
+def dinamic_bar(total_percentage=100, stop_at="", messages="", time=1200, final_message="Done!"):
     """
-    Funcão gera uma barra de progesso dinâmica que pode imprimir mensagens em certas percentagens
+    Function generates a dynamic progress bar that can print messages in certain percentages
 
-    :param percentagemtotal: Percentagem Total da barra
-    :type percentagemtotal: int
-    :param pararempercentagem: Se verdadeiro, em uma certa percentagem a função irá imprimir algo
-    :type pararempercentagem: True / False
-    :param pararem: Lista com percetagens que deseja parar, apenas números (Ex. [25, 50])
-    :type pararem: list
-    :param imprimir: Lista com mensagens que deseja imprimir, número de elementos deve ser igual à 'pararem'
-    :type imprimir: list
-    :param tempo: Tempo que a barra levará para completar 100% (1200 é aproximadamente 3s)
-    :type tempo: int
-    :param mensagemconclusao: Mensagem que irá ser mostrada após a barra atingir 100%
-    :type mensagemconclusao: str
+    :param int total_percentage: Total percentage, can be higher than 100%, values will adjust for that
+    :param list stop_at: If set, in a certain percentage the function will print something (E.g. [25, 50])
+    :param list messages: List with messages you want to print, number of elements must equal to parameter stop_at
+    :param int time: Time the bar will take to complete 100% (1200 is approximately 3s)
+    :param str final_message: Message that will be shown after the bar reaches 100%
+    :author André Pereira:
     """
     posicao_mensagem = 0
-    numero_mensagens = len(pararem)
-    # Percentagem total + 1 logo que o zero também conta
-    for p in range(percentagemtotal + 1):
-        for t in range(tempo):
-            barradeprogresso(p, 100)
-        if pararempercentagem is True:
+    numero_mensagens = len(stop_at)
+    # adds 1 since last number wouldn't be counted otherwise
+    for p in range(total_percentage + 1):
+        # Creates time and prints the bar
+        for t in range(time):
+            progress_bar(p, 100)
+        if stop_at:
             try:
-                if p == pararem[posicao_mensagem]:
-                    print(imprimir[posicao_mensagem])
-                    # Adiciona mais 1 para posicao da mensagem até que seja igual ao número de elementos em pararem
+                if p == stop_at[posicao_mensagem]:
+                    print("\r" + messages[posicao_mensagem])
+                    # Adds 1 to message position until it equals the number of elements in stop
                     if posicao_mensagem != numero_mensagens:
                         posicao_mensagem += 1
             except IndexError:
                 continue
-    print("\n" + mensagemconclusao)
+    print("\n" + final_message)
 
-# --------------------------------- Função para implementar carregamento com '...' ----------------------------------- #
+# --------------------------------------------------- loading bar ---------------------------------------------------- #
 
 
-def loading_info(info="Loading", tipo_de_ponto=".", numero_pontos=3, tipo_info="info", velocidade=1):
+def loading_info(info="Loading", dot_type=".", number_dots=3, info_type="info", dot_speed=1):
     """
-    Função imprime um ponto a cada x segundos(EX.: Loading...)
-    :param str info: Mensagem a ser impressa
-    :param str tipo_de_ponto: Tipo de pontos(EX.: '.' , '-', etc) irão aparecer apos a info
-    :param int numero_pontos: Número de pontos que serão colocados
-    :param str tipo_info: Tipo da informação(pode ser 'info', 'error', 'warning') irá aparecer antes da info(Ex.:[INFO])
-    :param int velocidade: Velocidade que os pontos irão aparecer, deve ser maior que zero, mas pode ser menor que 1
+    Function prints a dot after a text every x seconds (E.g. Loading ...)
+
+    :param str info: Information to be printed
+    :param str dot_type: Type of symbol to be printed (E.g. '.' , '-', etc), they will appear after info
+    :param int number_dots: Number of dots, increasing this will obviously increase loading time
+    :param str info_type: Type of info (E.g. '[info]', '[error]', '[warning]') this will appear before info, can be none
+    :param float dot_speed: Speed at which points will appear, must be greater than zero, but may be less than 1
     """
-    if tipo_info:
-        tipo_info = "[{}]".format(tipo_info.upper())
-    for loading in range(numero_pontos + 1):
-        print("\r{0} {1}".format(tipo_info, info) + tipo_de_ponto * loading, end="")
-        # Cria tempo para parecer que está carregando
-        for t in range(10000000 * velocidade):
+    if info_type:
+        info_type = "[{}]".format(info_type.upper())
+    for loading in range(number_dots + 1):
+        print("\r{0} {1}".format(info_type, info) + dot_type * loading, end="")
+        # Creates time by adding 1 to t
+        for t in range(int(5000000 * dot_speed)):
             t += 1
     print("\n")
 
