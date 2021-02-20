@@ -35,7 +35,6 @@ def dinamic_bar(total_percentage=100, stop_at="", messages="", time=1200, final_
     :param list messages: List with messages you want to print, number of elements must equal to parameter stop_at
     :param int time: Time the bar will take to complete 100% (1200 is approximately 3s)
     :param str final_message: Message that will be shown after the bar reaches 100%
-    :author André Pereira:
     """
     posicao_mensagem = 0
     numero_mensagens = len(stop_at)
