@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="loading-bars",
-    version="0.0.2",
+    version="0.0.1",
     author="André Pereira",
     author_email="andrepereira180903@gmail.com",
     description="Set of loading bars to make your life easy!",
