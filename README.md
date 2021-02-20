@@ -10,14 +10,14 @@ Requirements: Python 3.x
 # Usage
 loading-bars currently contains 3 different loading bars:
 
-- ###progress_bar(int)
+###- progress_bar(int)
   
     This function creates a progress bar with a desired size and percentage
 
     Requires the current percentage value
 
 
-- ###dinamic_bar()
+###- dinamic_bar()
   
     This function will make the first progress bar dinamic and very customizable
 
@@ -25,7 +25,7 @@ loading-bars currently contains 3 different loading bars:
 
     ![example-loadingbar.gif](https://s2.gifyu.com/images/example-loadingbar.gif)
 
-- ###loading_info()
+###- loading_info()
     
     This function will show a information while loads by adding dots
   
